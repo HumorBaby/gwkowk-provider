@@ -1,0 +1,40 @@
+{
+  "name": "helpel-server",
+  "version": "0.1.0",
+  "description": "A paste server to store and serve Sopel help outputs",
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www",
+    "dev-debug": "nodemon --inspect-brk=0.0.0.0:9229 --nolazy ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gwkowk/gwkowk-server.git"
+  },
+  "keywords": [
+    "paste",
+    "sopel",
+    "server"
+  ],
+  "author": "Humorous Baby <humorbaby@humorbaby.net>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gwkowk/gwkowk-server/issues"
+  },
+  "homepage": "https://github.com/gwkowk/gwkowk-server#readme",
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "express": "^4.16.4",
+    "morgan": "^1.9.1",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-node": "^9.0.1",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "nodemon": "^1.19.0"
+  }
+}
