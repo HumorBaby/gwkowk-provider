@@ -1,0 +1,43 @@
+version: '2'
+
+services:
+  app:
+    extends:
+      file: docker-compose.yml
+      service: app
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - "./.env.dev:/app/.env"
+    ports:
+      - "127.0.0.1:13000:3000"
+      - "127.0.0.1:19229:9229"
+    command: "npm run dev"
+    
+  db:
+    extends:
+      file: docker-compose.yml
+      service: db
+    volumes:
+      - "./data/dev-db:/data/db"
+  
+  mongo-express:
+    image: mongo-express
+    ports:
+      - "127.0.0.1:18081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=db
+
+  frontend:
+    image: node:10-alpine
+    user: node
+    working_dir: /frontend
+    environment:
+      - NODE_ENV=development
+      - API_PROXY_URL=http://app:3000
+    volumes:
+      - "./frontend:/frontend"
+    ports:
+      - "127.0.0.1:18080:8080"
+    command: "npm run serve"
+      

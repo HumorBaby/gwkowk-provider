@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+  app:
+    image: node:10-alpine
+    user: node
+    working_dir: /app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - "./.env.prod:/app/.env"
+      - "./server:/app"
+    ports:
+      - "3000:3000"
+    command: "npm start"
+    
+  db:
+    image: mongo:4-bionic
+    volumes:
+      - "./data/db:/data/db"
