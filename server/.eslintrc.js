@@ -13,5 +13,15 @@ module.exports = {
         "ecmaVersion": 2018
     },
     "rules": {
-    }
+    },
+    "overrides": [
+        {
+            "files": ["*.test.js"],
+            "rules": {
+                "no-unused-expressions": "off",
+                "no-undef": "off",
+                "no-unused-vars": "off"
+            }
+        }
+    ]
 };
