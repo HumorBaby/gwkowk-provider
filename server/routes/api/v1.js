@@ -3,9 +3,11 @@ const router = require('express').Router()
 module.exports = config => {
   const helpListingController = require('../../controllers/helpListing')(config)
 
-  router.route('/helpListing')
-    // POST /api/[v1/]helpListing - submit help listing
-    .post(helpListingController.createHelpListing)
+  // POST /api/v1/helpListing - submit help listing
+  router.post('/helpListing', helpListingController.createHelpListing)
+
+  // GET /api/v1/helpListing/:listingId - get specific help listing
+  router.get('/helpListing/:listingId', helpListingController.getHelpListing)
 
   // test path
   router.route('/')

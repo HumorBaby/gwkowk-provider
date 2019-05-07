@@ -13,6 +13,16 @@ module.exports = config => {
         // TODO: Use jsend.error/fail for "expected" errors
         next(err)
       }
+    },
+
+    getHelpListing: async (req, res, next) => {
+      try {
+        const listing = await helpListingActions.fetch(req.params.listingId)
+        return res.jsend.success(listing)
+      } catch (err) {
+        // TODO: Use jsend.error/fail for "expected" errors
+        next(err)
+      }
     }
   }
 }
