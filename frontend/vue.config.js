@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
     devServer: {
         proxy: {
@@ -7,4 +9,13 @@ module.exports = {
             }
         }
     }
+  },
+  pluginOptions: {
+    'style-resources-loader': {
+      preProcessor: 'sass',
+      patterns: [
+        path.resolve(__dirname, 'src/style/main.sass')
+      ]
+    }
+  }
 }
