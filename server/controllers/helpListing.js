@@ -17,7 +17,9 @@ module.exports = config => {
     getHelpListing: async (req, res, next) => {
       try {
         const listing = await helpListingActions.fetch(req.params.listingId)
-        res.jsend.success(listing)
+        listing
+          ? res.jsend.success(listing)
+          : res.status(404).jsend.fail('Help listing not found.')
       } catch (err) {
         // TODO: Use jsend.error/fail for "expected" errors
         next(err)
