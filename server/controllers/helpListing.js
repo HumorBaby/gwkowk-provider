@@ -7,8 +7,7 @@ module.exports = config => {
     createHelpListing: async (req, res, next) => {
       try {
         const listingId = await helpListingActions.create(req.body)
-        const listingUrl = helpers.buildListingUrl(req, listingId)
-        return res.jsend.success({ listingUrl })
+        res.jsend.success({ listingId })
       } catch (err) {
         // TODO: Use jsend.error/fail for "expected" errors
         next(err)
@@ -18,9 +17,18 @@ module.exports = config => {
     getHelpListing: async (req, res, next) => {
       try {
         const listing = await helpListingActions.fetch(req.params.listingId)
-        return res.jsend.success(listing)
+        res.jsend.success(listing)
       } catch (err) {
         // TODO: Use jsend.error/fail for "expected" errors
+        next(err)
+      }
+    },
+
+    checkHelpListing: async (req, res, next) => {
+      try {
+        const listing = await helpListingActions.fetch(req.params.listingId)
+        res.status(listing ? 200 : 404).end()
+      } catch (err) {
         next(err)
       }
     }
