@@ -1,16 +1,12 @@
 <template>
   <div>
     <div :id="module.moduleName+'-module'" class="notification has-background-white">
-      <icon-link-hoverable :href="module.moduleName+'-module'"/>
       <h4 class="subtitle is-4 is-inline">
         <code>{{module.moduleName}}</code>commands
       </h4>
+      <icon-link-hoverable :href="module.moduleName+'-module'"/>
     </div>
-    <listing-print-module-entry
-      v-for="entry in module.entries"
-      :key="entry._id"
-      :entry="entry"
-    />
+    <listing-print-module-entry v-for="entry in module.entries" :key="entry._id" :entry="entry"/>
   </div>
 </template>
 
