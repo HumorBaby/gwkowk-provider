@@ -34,7 +34,6 @@ export default {
       this.scrollTo(this.$route.hash)
     }
   },
-
   computed: {
     ...mapState(['status'])
   },
@@ -53,7 +52,7 @@ export default {
 
 .is-main-content
   padding: 2.5rem 0 0 0
-  margin: 0 .75rem 0 0
+  margin: 0 0 0 0
 
 $navbar-height: 3.25rem
 
@@ -61,11 +60,12 @@ $navbar-height: 3.25rem
   &.is-fullheight
     min-height: calc(100vh - ( #{$navbar-height} - .75rem ) )
     max-height: calc(100vh - ( #{$navbar-height} - .75rem ) )
+    max-width: calc(100vw + .75rem)
     height: calc(100vh - ( #{$navbar-height} - .75rem ) )
     display: flex
     flex-direction: row
     justify-content: stretch
     .column
-      overflow-y: auto
+      overflow-y: scroll
 
 </style>
