@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import axios from 'axios'
+import Fuse from 'fuse.js'
 
 import { STATUS_FAIL, STATUS_SUCCESS } from './constants'
 
@@ -13,6 +14,8 @@ const store = new Vuex.Store({
         listing: {},
         status: null,
         error: null,
+        searchString: '',
+        fuse: null
     },
     mutations: {
         SET_STATUS: (state, newStatus) => {
@@ -20,6 +23,9 @@ const store = new Vuex.Store({
         },
         SET_ERROR: (state, newError) => {
             state.error = newError
+        },
+        SET_SEARCH_STRING: (state, newSearchString) => {
+            state.searchString = newSearchString
         },
         SET_LISTING: (state, newListing) => {
             /// Store storted listing
@@ -43,11 +49,40 @@ const store = new Vuex.Store({
             });
             // Store storted listing
             state.listing = newListing
+
+            // Init new Fuse for search
+            let entries = []
+            state.listing.modules.forEach(module => { entries.push(...module.entries) })
+            state.fuse = new Fuse(entries, {
+                shouldSort: false,
+                threshold: 0.2,
+                distance: 1000,
+                id: "_id", // Return entries._id on match
+                keys: ['commands', 'doc']
+            })
         }
     },
     getters: {
         getModules: state => {
-            return state.listing.modules
+            // If search string is empty, return all entries
+            if (state.searchString === '') { return state.listing.modules }
+
+            // Otherwise, search
+            let matches = state.fuse.search(state.searchString)
+            if (matches.length === 0) { return [] }
+
+            return state.listing.modules.map(module => {
+                return Object.assign(
+                    {},
+                    module,
+                    {
+                        entries: module.entries.filter(
+                            entry => matches.includes(entry._id)
+                        )
+                    }
+                )
+            }).filter(module => module.entries.length > 0)
+
         }
     },
     actions: {
