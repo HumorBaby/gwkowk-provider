@@ -16,20 +16,42 @@ const defineSchema = config => {
       index: true,
       unique: true
     },
-    botNick: String,
+    botNick: {
+      type: String,
+      required: true
+    },
     serverHostname: String,
-    helpPrefix: String,
+    helpPrefix: {
+      type: String,
+      required: true
+    },
     // Help entries
-    modules: [{
-      _id: false,
-      moduleName: String,
-      entries: [{
+    modules: {
+      type: [{
         _id: false,
-        commands: { type: [String] }, // Command(s)
-        doc: String, // Command doc/purpose
-        examples: { type: [String] } // Command example(s)
-      }]
-    }]
+        moduleName: String,
+        entries: {
+          type: [{
+            _id: false,
+            commands: { type: [String] }, // Command(s)
+            doc: String, // Command doc/purpose
+            examples: { type: [String] } // Command example(s)
+          }],
+          required: true,
+          _id: false,
+          validate: {
+            validator: v => v !== null && v.length > 0,
+            message: () => 'At least 1 command entry is required per module.'
+          }
+        }
+      }],
+      required: true,
+      validate: {
+        validator: v => v !== null && v.length > 0,
+        message: () => 'At least 1 module is required.'
+      },
+      _id: false
+    }
   })
 
   const CHARACTER_SPACE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'

@@ -1,6 +1,4 @@
 module.exports = config => {
-  const helpers = require('../helpers')(config)
-
   const helpListingActions = require('../actions/helpListing')(config)
 
   return {
@@ -9,7 +7,6 @@ module.exports = config => {
         const listingId = await helpListingActions.create(req.body)
         res.jsend.success({ listingId })
       } catch (err) {
-        // TODO: Use jsend.error/fail for "expected" errors
         next(err)
       }
     },
@@ -21,7 +18,6 @@ module.exports = config => {
           ? res.jsend.success(listing)
           : res.status(404).jsend.fail('Help listing not found.')
       } catch (err) {
-        // TODO: Use jsend.error/fail for "expected" errors
         next(err)
       }
     },

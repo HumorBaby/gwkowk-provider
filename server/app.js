@@ -23,4 +23,10 @@ require('./services/database')(config)
 // Routes
 app.use('/api', require('./routes/api')(config))
 
+// Final error handler
+app.use((err, req, res, next) => {
+  logger.error('%o', err)
+  res.status(500).jsend.error(err)
+})
+
 module.exports = app
