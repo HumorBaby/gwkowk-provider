@@ -8,13 +8,13 @@
         <template v-if="status === constants.STATUS_SUCCESS">
           <div class="vert-div"></div>
           <h5 class="navbar-item subtitle is-5">
-            {{listing.botNick}}
-            <span v-if="listing.serverHostname">@{{listing.serverHostname}}</span>
+            {{botNick}}
+            <span v-if="serverHostname">@{{serverHostname}}</span>
           </h5>
           <div class="vert-div"></div>
           <h6 class="navbar-item subtitle is-6">
             Command prefix:
-            <code>{{listing.helpPrefix}}</code>
+            <code>{{helpPrefix}}</code>
           </h6>
         </template>
       </div>
@@ -24,9 +24,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 import * as constants from '../constants.js'
+import { mapState } from 'vuex'
 
 export default {
   data() {
@@ -35,12 +34,13 @@ export default {
     }
   },
   computed: {
-    listingId() {
-      return this.status === constants.STATUS_SUCCESS
-        ? this.listing.listingId
-        : ''
-    },
-    ...mapState(['listing', 'status'])
+    ...mapState({
+      status: 'status',
+      botNick: state => state.listing.botNick,
+      serverHostname: state => state.listing.serverHostname,
+      helpPrefix: state => state.listing.helpPrefix,
+      listingId: state => state.listing.listingId
+    })
   }
 }
 </script>
