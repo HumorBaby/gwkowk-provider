@@ -8,7 +8,7 @@
     </div>
     <listing-print-module-entry
       v-for="entry in module.entries"
-      :key="entry.commands.join()"
+      :key="entry._id"
       :entry="entry"
     />
   </div>

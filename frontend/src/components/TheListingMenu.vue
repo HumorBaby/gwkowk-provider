@@ -10,10 +10,10 @@
         </p>
       </li>
       <template v-for="module in listing.modules">
-        <li :key="module.moduleName">
+        <li :key="module._id">
           <a :href="'#'+module.moduleName+'-module'" class="menu-label">{{module.moduleName}}</a>
           <ul>
-            <li v-for="entry in module.entries" :key="entry.commands.join()">
+            <li v-for="entry in module.entries" :key="entry._id">
               <a :href="'#'+entry.commands[0]">{{entry.commands.join(', ')}}</a>
             </li>
           </ul>
