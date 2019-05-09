@@ -45,6 +45,11 @@ const store = new Vuex.Store({
             state.listing = newListing
         }
     },
+    getters: {
+        getModules: state => {
+            return state.listing.modules
+        }
+    },
     actions: {
         async fetchListing({ commit }, listingId) {
             try {

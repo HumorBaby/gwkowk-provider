@@ -9,7 +9,7 @@
           </span>
         </p>
       </li>
-      <template v-for="module in listing.modules">
+      <template v-for="module in modules">
         <li :key="module._id">
           <a :href="'#'+module.moduleName+'-module'" class="menu-label">{{module.moduleName}}</a>
           <ul>
@@ -24,11 +24,13 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapState(['listing'])
+    ...mapGetters({
+      modules: 'getModules'
+    })
   }
 }
 </script>

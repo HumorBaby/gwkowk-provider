@@ -1,14 +1,14 @@
 <template>
   <div>
-    <template v-for="(module,ix) in listing.modules">
+    <template v-for="(module,ix) in modules">
       <listing-print-module :key="module._id" :module="module"/>
-      <hr v-if="ix < listing.modules.length" :key="'hr' + module._id" align="center">
+      <hr v-if="ix < modules.length" :key="'hr' + module._id" align="center">
     </template>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 import ListingPrintModule from './ListingPrintModule'
 
@@ -17,7 +17,9 @@ export default {
     ListingPrintModule
   },
   computed: {
-    ...mapState(['listing'])
+    ...mapGetters({
+      modules: 'getModules'
+    })
   }
 }
 </script>
