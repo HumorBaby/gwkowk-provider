@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="columns is-fullheight">
+    <div v-if="status === constants.STATUS_SUCCESS" class="columns is-fullheight">
       <the-listing-menu class="column is-3 is-sidebar-menu"/>
       <the-listing-print class="column is-main-content"/>
     </div>
@@ -10,26 +10,38 @@
 <script>
 import TheListingMenu from '../components/TheListingMenu'
 import TheListingPrint from '../components/TheListingPrint'
+import { mapState } from 'vuex'
 
-const TIMEOUT = 1
+import * as constants from '../constants.js'
 
 export default {
   components: {
     TheListingMenu,
     TheListingPrint
   },
-  props: ['listingId'],
-  async mounted() {
-    await this.$store.dispatch('fetchListing', this.listingId)
-    if (this.$route.hash) {
-      setTimeout(() => this.scrollTo(this.$route.hash), TIMEOUT)
+
+  data() {
+    return {
+      constants
     }
   },
+
+  props: ['listingId'],
+
+  async created() {
+    await this.$store.dispatch('fetchListing', this.listingId)
+    if (this.$route.hash) {
+      this.scrollTo(this.$route.hash)
+    }
+  },
+
+  computed: {
+    ...mapState(['status'])
+  },
+
   methods: {
     scrollTo: function(hashtag) {
-      setTimeout(() => {
-        location.href = hashtag
-      }, TIMEOUT)
+      location.href = hashtag
     }
   }
 }

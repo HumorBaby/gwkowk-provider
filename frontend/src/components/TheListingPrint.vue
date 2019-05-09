@@ -1,5 +1,5 @@
 <template>
-  <div v-if="listing">
+  <div>
     <template v-for="(module,ix) in listing.modules">
       <listing-print-module :key="module.moduleName" :module="module"/>
       <hr v-if="ix < listing.modules.length" :key="module.moduleName+'hr'" align="center">

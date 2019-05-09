@@ -5,7 +5,7 @@
         <a class="navbar-item">
           <h4 class="title is-4">Helpel</h4>
         </a>
-        <template v-if="listingId">
+        <template v-if="status === constants.STATUS_SUCCESS">
           <div class="vert-div"></div>
           <h5 class="navbar-item subtitle is-5">
             {{listing.botNick}}
@@ -26,12 +26,21 @@
 <script>
 import { mapState } from 'vuex'
 
+import * as constants from '../constants.js'
+
 export default {
+  data() {
+    return {
+      constants
+    }
+  },
   computed: {
     listingId() {
-      return this.listing ? this.listing.listingId : null
+      return this.status === constants.STATUS_SUCCESS
+        ? this.listing.listingId
+        : ''
     },
-    ...mapState(['listing'])
+    ...mapState(['listing', 'status'])
   }
 }
 </script>
