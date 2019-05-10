@@ -1,3 +1,5 @@
+const path = require('path')
+
 const express = require('express')
 const morgan = require('morgan')
 const jsend = require('jsend')
@@ -22,6 +24,12 @@ require('./services/database')(config)
 
 // Routes
 app.use('/api', require('./routes/api')(config))
+
+// Serve main page (non-API)
+app.use(express.static(path.resolve(__dirname, 'public')))
+app.use('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'public/index.html'))
+})
 
 // Final error handler
 app.use((err, req, res, next) => {
